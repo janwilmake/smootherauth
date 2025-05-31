@@ -1,9 +1,9 @@
 {
   "name": "smootherauth",
   "compatibility_date": "2025-01-27",
-  "assets":{"directory":"./"},
+  "assets": { "directory": "./" },
   "routes": [
-    { "pattern": "flaredream.com", "custom_domain": true },
-    { "pattern": "www.flaredream.com", "custom_domain": true }
+    { "pattern": "smootherauth.com", "custom_domain": true },
+    { "pattern": "www.smootherauth.com", "custom_domain": true }
   ]
 }
