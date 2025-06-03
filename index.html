@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smoother Auth - OAuth Made Simple</title>
+    <title>simpler auth - oauth templates for cloudflare workers</title>
     <style>
         * {
             margin: 0;
@@ -12,211 +13,288 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace;
+            background: #f7f9fc;
+            color: #1a1a1a;
+            line-height: 1.6;
+            font-size: 14px;
         }
 
         .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 2rem;
-            text-align: center;
         }
 
-        .hero {
-            transform: translateY(100px);
-            opacity: 0;
-            animation: slideInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding-top: 2rem;
         }
 
         .logo {
-            font-size: 4rem;
-            font-weight: 800;
-            color: white;
-            margin-bottom: 1rem;
-            letter-spacing: -2px;
-            transform: translateY(50px);
-            opacity: 0;
-            animation: slideInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.2s forwards;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
         }
 
         .tagline {
-            font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 3rem;
-            font-weight: 300;
-            transform: translateY(50px);
-            opacity: 0;
-            animation: slideInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-            max-width: 800px;
-        }
-
-        .feature {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transform: translateY(50px);
-            opacity: 0;
-            animation: slideInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-        }
-
-        .feature:nth-child(1) { animation-delay: 0.6s; }
-        .feature:nth-child(2) { animation-delay: 0.8s; }
-        .feature:nth-child(3) { animation-delay: 1s; }
-
-        .feature-icon {
-            font-size: 2.5rem;
+            font-size: 1rem;
+            color: #6b7280;
+            font-weight: 400;
             margin-bottom: 1rem;
         }
 
-        .feature h3 {
-            color: white;
-            margin-bottom: 0.5rem;
-            font-size: 1.2rem;
-        }
-
-        .feature p {
-            color: rgba(255, 255, 255, 0.8);
+        .description {
             font-size: 0.9rem;
-            line-height: 1.5;
+            color: #9ca3af;
+            max-width: 600px;
+            margin: 0 auto 2rem;
         }
 
         .cta {
-            transform: translateY(50px);
-            opacity: 0;
-            animation: slideInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) 1.2s forwards;
+            margin-bottom: 2rem;
         }
 
         .btn {
             display: inline-block;
-            background: white;
-            color: #667eea;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
+            background: #fbbf24;
+            color: #1a1a1a;
+            padding: 0.75rem 1.5rem;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            transition: all 0.2s ease;
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            background: #f8f9ff;
+            background: #f59e0b;
+            transform: translateY(-1px);
         }
 
-        .floating {
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1px;
+            background: #e5e7eb;
+            border: 1px solid #e5e7eb;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            background: #f8fafc;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 0.75rem;
+            font-size: 1.2rem;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .card-description {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-features {
+            list-style: none;
+        }
+
+        .card-features li {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .card-features li:before {
+            content: "→";
             position: absolute;
-            opacity: 0.1;
-            animation: float 6s ease-in-out infinite;
+            left: 0;
+            color: #fbbf24;
         }
 
-        .floating:nth-child(1) {
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid #e5e7eb;
         }
 
-        .floating:nth-child(2) {
-            top: 60%;
-            right: 10%;
-            animation-delay: 2s;
+        .footer-text {
+            font-size: 0.8rem;
+            color: #9ca3af;
         }
 
-        .floating:nth-child(3) {
-            bottom: 20%;
-            left: 20%;
-            animation-delay: 4s;
+        .footer-link {
+            color: #2563eb;
+            text-decoration: none;
         }
 
-        @keyframes slideInUp {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
+        .footer-link:hover {
+            text-decoration: underline;
         }
 
         @media (max-width: 768px) {
-            .logo { font-size: 3rem; }
-            .tagline { font-size: 1.2rem; }
-            .features { grid-template-columns: 1fr; }
+            .container {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
-<body>
-    <!-- Floating decorative elements -->
-    <div class="floating">🔐</div>
-    <div class="floating">⚡</div>
-    <div class="floating">🚀</div>
 
+<body>
     <div class="container">
-        <div class="hero">
-            <h1 class="logo">Smoother Auth</h1>
-            <p class="tagline">OAuth Made Ridiculously Simple</p>
-            
-            <div class="features">
-                <div class="feature">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Lightning Fast</h3>
-                    <p>PKCE-enabled OAuth middleware that just works out of the box</p>
-                </div>
-                
-                <div class="feature">
-                    <div class="feature-icon">🛡️</div>
-                    <h3>Secure by Default</h3>
-                    <p>Built-in CSRF protection and secure session management</p>
-                </div>
-                
-                <div class="feature">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Developer Friendly</h3>
-                    <p>Drop-in middleware for Cloudflare Workers and beyond</p>
-                </div>
-            </div>
-            
+        <div class="header">
+            <h1 class="logo">simpler auth</h1>
+            <p class="tagline">oauth templates for cloudflare workers</p>
+            <p class="description">
+                copy-pasteable auth templates. no dependencies. no bloat.
+                just ~200 lines of secure oauth that you can customize however you want.
+            </p>
             <div class="cta">
-                <a href="https://github.com/stars/janwilmake/lists/smoother-auth" class="btn">
-                    Get Started →
+                <a href="https://github.com/stars/janwilmake/lists/simpler-auth" class="btn">
+                    view templates
                 </a>
             </div>
         </div>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🐙</div>
+                    <h3 class="card-title">github oauth</h3>
+                </div>
+                <p class="card-description">
+                    perfect for developer tools and apps targeting the github community
+                </p>
+                <ul class="card-features">
+                    <li>pkce flow implementation</li>
+                    <li>secure session handling</li>
+                    <li>custom redirect support</li>
+                    <li>scope customization</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">𝕏</div>
+                    <h3 class="card-title">x (twitter) oauth</h3>
+                </div>
+                <p class="card-description">
+                    ideal for social apps and products targeting x users
+                </p>
+                <ul class="card-features">
+                    <li>oauth 2.0 with pkce</li>
+                    <li>csrf protection built-in</li>
+                    <li>lightweight session management</li>
+                    <li>easy customization</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🔧</div>
+                    <h3 class="card-title">custom flows</h3>
+                </div>
+                <p class="card-description">
+                    templates for building your own oauth integrations
+                </p>
+                <ul class="card-features">
+                    <li>modular architecture</li>
+                    <li>country-specific scopes</li>
+                    <li>custom redirect handling</li>
+                    <li>minimal dependencies</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">⚡</div>
+                    <h3 class="card-title">why simpler?</h3>
+                </div>
+                <p class="card-description">
+                    most auth libraries are bloated. this is just templates you copy.
+                </p>
+                <ul class="card-features">
+                    <li>no huge dependencies</li>
+                    <li>understand every line</li>
+                    <li>customize everything</li>
+                    <li>cloudflare workers ready</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">💰</div>
+                    <h3 class="card-title">stripe payments</h3>
+                </div>
+                <p class="card-description">
+                    when you don't need identity, just payment auth
+                </p>
+                <ul class="card-features">
+                    <li>payment-based auth</li>
+                    <li>no user accounts needed</li>
+                    <li>instant access control</li>
+                    <li>revenue + auth combined</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🚀</div>
+                    <h3 class="card-title">getting started</h3>
+                </div>
+                <p class="card-description">
+                    pick a template, copy the code, customize for your needs
+                </p>
+                <ul class="card-features">
+                    <li>copy one file (~200 lines)</li>
+                    <li>set your oauth credentials</li>
+                    <li>deploy to cloudflare</li>
+                    <li>done. that's it.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p class="footer-text">
+                built by <a href="https://x.com/janwilmake" class="footer-link">janwilmake</a>
+                because auth doesn't need to be complicated
+            </p>
+        </div>
     </div>
-
-    <script>
-        // Add some extra smoothness on scroll
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallax = document.querySelectorAll('.floating');
-            parallax.forEach((element, index) => {
-                const speed = 0.5 + (index * 0.1);
-                element.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.1}deg)`;
-            });
-        });
-
-        // Smooth entrance animation trigger
-        document.addEventListener('DOMContentLoaded', () => {
-            document.body.style.opacity = '1';
-        });
-    </script>
 </body>
+
 </html>

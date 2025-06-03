@@ -1,9 +1,9 @@
 {
-  "name": "smootherauth",
+  "name": "simplerauth",
   "compatibility_date": "2025-01-27",
   "assets": { "directory": "./" },
   "routes": [
-    { "pattern": "smootherauth.com", "custom_domain": true },
-    { "pattern": "www.smootherauth.com", "custom_domain": true }
+    { "pattern": "simplerauth.com", "custom_domain": true },
+    { "pattern": "www.simplerauth.com", "custom_domain": true }
   ]
 }
