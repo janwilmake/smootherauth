@@ -5,295 +5,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>simpler auth - oauth templates for cloudflare workers</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace;
-            background: #f7f9fc;
-            color: #1a1a1a;
-            line-height: 1.6;
-            font-size: 14px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 4rem;
-            padding-top: 2rem;
-        }
-
-        .logo {
-            font-size: 2.5rem;
-            font-weight: 300;
-            color: #2563eb;
-            margin-bottom: 0.5rem;
-            letter-spacing: -1px;
-        }
-
-        .tagline {
-            font-size: 1rem;
-            color: #6b7280;
-            font-weight: 400;
-            margin-bottom: 1rem;
-        }
-
-        .description {
-            font-size: 0.9rem;
-            color: #9ca3af;
-            max-width: 600px;
-            margin: 0 auto 2rem;
-        }
-
-        .cta {
-            margin-bottom: 2rem;
-        }
-
-        .btn {
-            display: inline-block;
-            background: #fbbf24;
-            color: #1a1a1a;
-            padding: 0.75rem 1.5rem;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .btn:hover {
-            background: #f59e0b;
-            transform: translateY(-1px);
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1px;
-            background: #e5e7eb;
-            border: 1px solid #e5e7eb;
-        }
-
-        .card {
-            background: white;
-            padding: 2rem;
-            transition: all 0.2s ease;
-        }
-
-        .card:hover {
-            background: #f8fafc;
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .card-icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 0.75rem;
-            font-size: 1.2rem;
-        }
-
-        .card-title {
-            font-size: 1rem;
-            font-weight: 500;
-            color: #1f2937;
-        }
-
-        .card-description {
-            font-size: 0.85rem;
-            color: #6b7280;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-features {
-            list-style: none;
-        }
-
-        .card-features li {
-            font-size: 0.8rem;
-            color: #9ca3af;
-            margin-bottom: 0.5rem;
-            padding-left: 1rem;
-            position: relative;
-        }
-
-        .card-features li:before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: #fbbf24;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 4rem;
-            padding: 2rem 0;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .footer-text {
-            font-size: 0.8rem;
-            color: #9ca3af;
-        }
-
-        .footer-link {
-            color: #2563eb;
-            text-decoration: none;
-        }
-
-        .footer-link:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-
-            .logo {
-                font-size: 2rem;
-            }
-
-            .grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <div class="container">
-        <div class="header">
-            <h1 class="logo">simpler auth</h1>
-            <p class="tagline">oauth templates for cloudflare workers</p>
-            <p class="description">
-                copy-pasteable auth templates. no dependencies. no bloat.
-                just ~200 lines of secure oauth that you can customize however you want.
-            </p>
-            <div class="cta">
-                <a href="https://github.com/stars/janwilmake/lists/simpler-auth" class="btn">
-                    view templates
-                </a>
-            </div>
-        </div>
+        <header>
+            <h1>simpler auth</h1>
+            <p>oauth templates for cloudflare workers</p>
+            <p>copy-pasteable auth templates. no dependencies. no bloat. just ~200 lines of secure oauth that you can
+                customize however you want.</p>
+            <a href="https://github.com/stars/janwilmake/lists/simpler-auth">view templates</a>
+        </header>
 
-        <div class="grid">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">🐙</div>
-                    <h3 class="card-title">github oauth</h3>
-                </div>
-                <p class="card-description">
-                    perfect for developer tools and apps targeting the github community
-                </p>
-                <ul class="card-features">
+        <main>
+            <article>
+                <h3>🐙 github oauth</h3>
+                <p>perfect for developer tools and apps targeting the github community</p>
+                <ul>
                     <li>pkce flow implementation</li>
                     <li>secure session handling</li>
                     <li>custom redirect support</li>
                     <li>scope customization</li>
                 </ul>
-            </div>
+            </article>
 
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">𝕏</div>
-                    <h3 class="card-title">x (twitter) oauth</h3>
-                </div>
-                <p class="card-description">
-                    ideal for social apps and products targeting x users
-                </p>
-                <ul class="card-features">
+            <article>
+                <h3>𝕏 x (twitter) oauth</h3>
+                <p>ideal for social apps and products targeting x users</p>
+                <ul>
                     <li>oauth 2.0 with pkce</li>
                     <li>csrf protection built-in</li>
                     <li>lightweight session management</li>
                     <li>easy customization</li>
                 </ul>
-            </div>
+            </article>
 
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">🔧</div>
-                    <h3 class="card-title">custom flows</h3>
-                </div>
-                <p class="card-description">
-                    templates for building your own oauth integrations
-                </p>
-                <ul class="card-features">
+            <article>
+                <h3>🔧 custom flows</h3>
+                <p>templates for building your own oauth integrations</p>
+                <ul>
                     <li>modular architecture</li>
                     <li>country-specific scopes</li>
                     <li>custom redirect handling</li>
                     <li>minimal dependencies</li>
                 </ul>
-            </div>
+            </article>
 
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">⚡</div>
-                    <h3 class="card-title">why simpler?</h3>
-                </div>
-                <p class="card-description">
-                    most auth libraries are bloated. this is just templates you copy.
-                </p>
-                <ul class="card-features">
+            <article>
+                <h3>⚡ why simpler?</h3>
+                <p>most auth libraries are bloated. this is just templates you copy.</p>
+                <ul>
                     <li>no huge dependencies</li>
                     <li>understand every line</li>
                     <li>customize everything</li>
                     <li>cloudflare workers ready</li>
                 </ul>
-            </div>
+            </article>
 
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">💰</div>
-                    <h3 class="card-title">stripe payments</h3>
-                </div>
-                <p class="card-description">
-                    when you don't need identity, just payment auth
-                </p>
-                <ul class="card-features">
+            <article>
+                <h3>💰 stripe payments</h3>
+                <p>when you don't need identity, just payment auth</p>
+                <ul>
                     <li>payment-based auth</li>
                     <li>no user accounts needed</li>
                     <li>instant access control</li>
                     <li>revenue + auth combined</li>
                 </ul>
-            </div>
+            </article>
 
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">🚀</div>
-                    <h3 class="card-title">getting started</h3>
-                </div>
-                <p class="card-description">
-                    pick a template, copy the code, customize for your needs
-                </p>
-                <ul class="card-features">
+            <article>
+                <h3>🚀 getting started</h3>
+                <p>pick a template, copy the code, customize for your needs</p>
+                <ul>
                     <li>copy one file (~200 lines)</li>
                     <li>set your oauth credentials</li>
                     <li>deploy to cloudflare</li>
                     <li>done. that's it.</li>
                 </ul>
-            </div>
-        </div>
+            </article>
+        </main>
 
-        <div class="footer">
-            <p class="footer-text">
-                built by <a href="https://x.com/janwilmake" class="footer-link">janwilmake</a>
-                because auth doesn't need to be complicated
+        <footer>
+            <p>built by <a href="https://x.com/janwilmake">janwilmake</a> because auth doesn't need to be complicated
             </p>
-        </div>
+        </footer>
     </div>
 </body>
 
